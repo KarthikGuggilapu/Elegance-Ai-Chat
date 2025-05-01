@@ -3,27 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GROQ Chat AI</title>
+  <title>Navy Elegance AI Chat</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #888; border-radius: 6px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+    }
+    
+    .sidebar-gradient {
+      background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+    }
+    
+    .typing-indicator span {
+      animation: blink 1.4s infinite both;
+      background-color: #4d55eb;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes blink {
+      0% { opacity: 0.2; transform: translateY(0); }
+      20% { opacity: 1; transform: translateY(-2px); }
+      100% { opacity: 0.2; transform: translateY(0); }
+    }
+    
+    .smooth-transition {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    textarea:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(77, 85, 235, 0.2);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #c7d7fe;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a4bcfd;
+    }
+    
+    .message-actions {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    .message-container:hover .message-actions {
+      opacity: 1;
+    }
+    
+    pre code.hljs {
+      padding: 0;
+      background: transparent;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-r from-slate-100 to-slate-200 text-gray-800 min-h-screen flex items-center justify-center p-4">
-  <div class="w-full max-w-3xl bg-white rounded-2xl shadow-xl flex flex-col h-[90vh] overflow-hidden">
-    <div class="p-4 border-b bg-blue-600 text-white text-center text-xl font-semibold">💬 Chat with GROQ AI</div>
+<body class="text-gray-800 h-screen overflow-hidden">
+  <div class="flex h-full">
+    <!-- Sidebar -->
+    <aside class="w-64 sidebar-gradient shadow-lg flex flex-col border-r border-gray-200">
+      <div class="p-5 pb-3 flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-navy-100 flex items-center justify-center">
+          <i data-lucide="messages-square" class="text-navy-600 w-5 h-5"></i>
+        </div>
+        <h1 class="font-semibold text-lg text-gray-700">Conversations</h1>
+      </div>
+      <div id="chatList" class="flex-1 overflow-y-auto p-3 space-y-1"></div>
+      <button id="newChatBtn" class="m-4 p-3 bg-navy-600 hover:bg-navy-700 text-white rounded-lg flex items-center justify-center space-x-2 smooth-transition">
+        <i data-lucide="plus" class="w-5 h-5"></i>
+        <span>New Chat</span>
+      </button>
+    </aside>
 
-    <div id="chatBox" class="flex-1 overflow-y-auto px-6 py-4 space-y-4 text-sm"></div>
+    <!-- Chat Section -->
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <!-- Header -->
+      <header class="p-4 border-b border-gray-200 bg-white flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
+          <i data-lucide="bot" class="text-navy-600 w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="font-semibold text-gray-800">AI Assistant</h2>
+          <p class="text-xs text-gray-500">Always here to help</p>
+        </div>
+      </header>
 
-    <div class="p-4 border-t bg-gray-50 flex gap-2">
-      <textarea id="question" rows="2" class="flex-1 border border-gray-300 rounded-lg p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Type your message..."></textarea>
-      <button id="askBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Send</button>
-    </div>
+      <!-- Chat Messages -->
+      <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8"></div>
+
+      <!-- Input Area -->
+      <div class="p-4 border-t border-gray-200 bg-white">
+        <div class="relative">
+          <textarea 
+            id="question" 
+            rows="2" 
+            class="w-full border border-gray-300 rounded-xl p-4 pr-12 resize-none focus:border-navy-300 smooth-transition" 
+            placeholder="Ask me anything..."
+          ></textarea>
+          <button 
+            id="askBtn" 
+            class="absolute right-3 bottom-3 w-10 h-10 rounded-lg bg-navy-600 hover:bg-navy-700 text-white flex items-center justify-center smooth-transition"
+            title="Send message"
+          >
+            <i data-lucide="send" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <p class="text-xs text-gray-500 mt-2 text-center">AI may produce inaccurate information. Consider checking important information.</p>
+      </div>
+    </main>
   </div>
 
+  <script>
+    // Your JavaScript code goes here
+    // (The complete JavaScript code from previous response)
+  </script>
+
   <script src="./app.js"></script>
+  
+  <script>
+    // Initialize Tailwind config with custom navy palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50: '#f0f4ff',
+              100: '#e0e9fe',
+              200: '#c7d7fe',
+              300: '#a4bcfd',
+              400: '#7f95fa',
+              500: '#6172f5',
+              600: '#4d55eb',
+              700: '#3f43d7',
+              800: '#3438ae',
+              900: '#2f3389',
+            }
+          }
+        }
+      }
+    }
+    
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
 </body>
 </html>
