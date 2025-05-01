@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Navy Elegance AI Chat</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Elegance AI Chat - An elegant chat interface for AI conversations">
+  <meta name="format-detection" content="telephone=no">
+  <title>Elegance AI Chat</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -76,12 +79,331 @@
       padding: 0;
       background: transparent;
     }
+    
+    /* Ensure code blocks don't overflow */
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    
+    /* Fix for language titles */
+    .code-language {
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+    
+    /* Markdown content styling */
+    .markdown-content h1, 
+    .markdown-content h2, 
+    .markdown-content h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    
+    .markdown-content h1 {
+      font-size: 1.5rem;
+    }
+    
+    .markdown-content h2 {
+      font-size: 1.25rem;
+    }
+    
+    .markdown-content h3 {
+      font-size: 1.125rem;
+    }
+    
+    .markdown-content ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .markdown-content ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .markdown-content li {
+      margin-bottom: 0.25rem;
+    }
+    
+    .markdown-content strong {
+      font-weight: 600;
+    }
+    
+    .markdown-content p {
+      margin-bottom: 0.75rem;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .max-w-\[85\%\] {
+        max-width: 90% !important;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .max-w-\[85\%\] {
+        max-width: 95% !important;
+      }
+      
+      .markdown-content h1 {
+        font-size: 1.25rem;
+      }
+      
+      .markdown-content h2 {
+        font-size: 1.125rem;
+      }
+      
+      .markdown-content h3 {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Code block styling */
+    pre {
+      margin: 0;
+      padding: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      background-color: #1e293b;
+    }
+    
+    pre code {
+      display: block;
+      padding: 0;
+      white-space: pre;
+      font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
+      line-height: 1.5;
+      tab-size: 2;
+    }
+    
+    .code-copy-btn {
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #6b7280;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    
+    .code-copy-btn:hover {
+      color: #4d55eb;
+    }
+    
+    /* Match the chat copy button style */
+    .code-copy-btn, .copy-btn {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #6b7280;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    
+    .code-copy-btn:hover, .copy-btn:hover {
+      color: #4d55eb;
+    }
+    
+    /* Ensure proper code indentation */
+    pre code {
+      text-indent: 0;
+    }
+    
+    /* Code block container */
+    .code-block {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.375rem;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background-color: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .code-language {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+    }
+    
+    /* Responsive code blocks */
+    @media (max-width: 640px) {
+      pre code {
+        font-size: 0.75rem;
+      }
+      
+      .code-header {
+        padding: 0.375rem 0.75rem;
+      }
+      
+      .code-language {
+        font-size: 0.75rem;
+      }
+    }
+    
+    /* Chat list styling */
+    #chatList {
+      scrollbar-width: thin;
+      scrollbar-color: #c7d7fe transparent;
+    }
+    
+    #chatList::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    #chatList::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    #chatList::-webkit-scrollbar-thumb {
+      background-color: #c7d7fe;
+      border-radius: 20px;
+    }
+    
+    /* Date group headers */
+    #chatList .date-header {
+      position: sticky;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      z-index: 1;
+    }
+    
+    /* Chat item styling */
+    .chat-item {
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+      padding-left: calc(0.75rem - 3px);
+    }
+    
+    .chat-item:hover {
+      transform: translateX(2px);
+    }
+    
+    /* Selected chat styling */
+    .selected-chat {
+      background-color: #f0f4ff !important;
+      border-left: 3px solid #4d55eb !important;
+      padding-left: calc(0.75rem - 3px) !important;
+    }
+    
+    /* Fixed width for chat names */
+    .chat-item span.truncate {
+      display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    /* Status dot styling */
+    .chat-item .rounded-full {
+      flex-shrink: 0; /* Prevent the dot from shrinking */
+      width: 0.75rem !important; /* Force consistent width */
+      height: 0.75rem !important; /* Force consistent height */
+      margin-right: 0.5rem !important; /* Force consistent margin */
+    }
+    
+    /* Time display styling */
+    .chat-item .text-xs {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    
+    /* Chat item hover effect */
+    .chat-item {
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+      padding-left: calc(0.75rem - 3px);
+    }
+    
+    .chat-item:hover {
+      transform: translateX(2px);
+    }
+    
+    /* Rename tooltip */
+    .chat-item .rename-tooltip {
+      display: none;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    
+    .chat-item:hover .rename-tooltip {
+      display: block;
+    }
+    
+    /* Empty state animation */
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+    
+    .empty-state-icon {
+      animation: pulse 2s infinite ease-in-out;
+    }
+    
+    /* Menu button styling */
+    .menu-btn {
+      color: #6b7280;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .menu-btn:hover {
+      color: #4d55eb;
+    }
+    
+    /* Menu styling */
+    #chatMenu {
+      animation: fadeIn 0.1s ease-out;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    .menu-item {
+      transition: background-color 0.15s ease;
+    }
+    
+    /* Group hover for showing menu button */
+    .group:hover .group-hover\:opacity-100 {
+      opacity: 1;
+    }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden">
   <div class="flex h-full">
     <!-- Sidebar -->
-    <aside class="w-64 sidebar-gradient shadow-lg flex flex-col border-r border-gray-200">
+    <aside id="sidebar" class="w-64 sidebar-gradient shadow-lg flex flex-col border-r border-gray-200 lg:translate-x-0 transform -translate-x-full transition-transform duration-300 ease-in-out fixed lg:relative z-10 h-full">
       <div class="p-5 pb-3 flex items-center space-x-2">
         <div class="w-8 h-8 rounded-lg bg-navy-100 flex items-center justify-center">
           <i data-lucide="messages-square" class="text-navy-600 w-5 h-5"></i>
@@ -98,18 +420,25 @@
     <!-- Chat Section -->
     <main class="flex-1 flex flex-col overflow-hidden">
       <!-- Header -->
-      <header class="p-4 border-b border-gray-200 bg-white flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
-          <i data-lucide="bot" class="text-navy-600 w-5 h-5"></i>
-        </div>
-        <div>
-          <h2 class="font-semibold text-gray-800">AI Assistant</h2>
-          <p class="text-xs text-gray-500">Always here to help</p>
+      <header class="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <!-- Mobile menu toggle -->
+          <button id="menuToggle" type="button" title="Toggle menu" class="lg:hidden w-10 h-10 rounded-full bg-navy-50 flex items-center justify-center">
+            <i data-lucide="menu" class="text-navy-600 w-5 h-5"></i>
+          </button>
+          
+          <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
+            <i data-lucide="bot" class="text-navy-600 w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="font-semibold text-gray-800">Elegance AI</h2>
+            <p class="text-xs text-gray-500">Always here to help</p>
+          </div>
         </div>
       </header>
 
       <!-- Chat Messages -->
-      <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8"></div>
+      <div id="chatBox" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-8"></div>
 
       <!-- Input Area -->
       <div class="p-4 border-t border-gray-200 bg-white">
@@ -118,7 +447,7 @@
             id="question" 
             rows="2" 
             class="w-full border border-gray-300 rounded-xl p-4 pr-12 resize-none focus:border-navy-300 smooth-transition" 
-            placeholder="Ask me anything..."
+            placeholder="Ask Elegance AI anything..."
           ></textarea>
           <button 
             id="askBtn" 
@@ -133,10 +462,8 @@
     </main>
   </div>
 
-  <script>
-    // Your JavaScript code goes here
-    // (The complete JavaScript code from previous response)
-  </script>
+  <!-- Overlay for mobile sidebar -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-0 hidden lg:hidden transition-opacity duration-300"></div>
 
   <script src="./app.js"></script>
   
@@ -165,6 +492,19 @@
     
     // Initialize Lucide icons
     lucide.createIcons();
+    
+    // Mobile sidebar toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    
+    menuToggle.addEventListener('click', toggleSidebar);
+    sidebarOverlay.addEventListener('click', toggleSidebar);
+    
+    function toggleSidebar() {
+      sidebar.classList.toggle('-translate-x-full');
+      sidebarOverlay.classList.toggle('hidden');
+    }
   </script>
 </body>
 </html>
