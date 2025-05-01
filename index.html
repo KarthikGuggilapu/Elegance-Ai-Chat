@@ -6,10 +6,37 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Elegance AI Chat - An elegant chat interface for AI conversations">
   <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
   <title>Elegance AI Chat</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Configure Tailwind to support dark mode
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50: '#f0f4ff',
+              100: '#e0e9fe',
+              200: '#c7d7fe',
+              300: '#a4bcfd',
+              400: '#7f95fa',
+              500: '#6172f5',
+              600: '#4d55eb',
+              700: '#3f43d7',
+              800: '#3438ae',
+              900: '#2f3389',
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -259,7 +286,7 @@
     /* Chat list styling */
     #chatList {
       scrollbar-width: thin;
-      scrollbar-color: #c7d7fe transparent;
+      scrollbar-color: #e2e8f0 transparent;
     }
     
     #chatList::-webkit-scrollbar {
@@ -271,7 +298,7 @@
     }
     
     #chatList::-webkit-scrollbar-thumb {
-      background-color: #c7d7fe;
+      background-color: #e2e8f0;
       border-radius: 20px;
     }
     
@@ -280,27 +307,34 @@
       position: sticky;
       top: 0;
       background-color: rgba(255, 255, 255, 0.9);
-      -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
       z-index: 1;
     }
     
     /* Chat item styling */
     .chat-item {
-      transition: all 0.2s ease;
+      transition: background-color 0.2s ease;
       border-left: 3px solid transparent;
-      padding-left: calc(0.75rem - 3px);
     }
     
     .chat-item:hover {
-      transform: translateX(2px);
+      background-color: #f3f4f6;
+      border-left: 3px solid transparent;
     }
     
     /* Selected chat styling */
     .selected-chat {
-      background-color: #f0f4ff !important;
-      border-left: 3px solid #4d55eb !important;
-      padding-left: calc(0.75rem - 3px) !important;
+      background-color: #f0f7ff !important;
+      border-left: 3px solid #3b82f6 !important;
+    }
+    
+    /* Menu button visibility */
+    .chat-item .menu-btn {
+      opacity: 0;
+    }
+    
+    .chat-item:hover .menu-btn {
+      opacity: 1;
     }
     
     /* Fixed width for chat names */
@@ -334,7 +368,7 @@
     }
     
     .chat-item:hover {
-      transform: translateX(2px);
+      transform: none;
     }
     
     /* Rename tooltip */
@@ -458,6 +492,114 @@
     #startChatBtn:hover {
       animation: none;
     }
+    
+    /* Dark mode styles */
+    .dark {
+      color-scheme: dark;
+    }
+    
+    .dark body {
+      background-color: #111827;
+      color: #f3f4f6;
+    }
+    
+    .dark .sidebar-gradient {
+      background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
+    }
+    
+    .dark .bg-white {
+      background-color: #1f2937;
+    }
+    
+    .dark .text-gray-800 {
+      color: #f3f4f6;
+    }
+    
+    .dark .text-gray-700 {
+      color: #e5e7eb;
+    }
+    
+    .dark .text-gray-600 {
+      color: #d1d5db;
+    }
+    
+    .dark .text-gray-500 {
+      color: #9ca3af;
+    }
+    
+    .dark .text-gray-400 {
+      color: #6b7280;
+    }
+    
+    .dark .border-gray-200 {
+      border-color: #374151;
+    }
+    
+    .dark .border-gray-300 {
+      border-color: #4b5563;
+    }
+    
+    .dark textarea {
+      background-color: #374151;
+      color: #f3f4f6;
+      border-color: #4b5563;
+    }
+    
+    .dark textarea::placeholder {
+      color: #9ca3af;
+    }
+    
+    .dark .chat-item:hover {
+      background-color: #2d3748;
+    }
+    
+    .dark .selected-chat {
+      background-color: #1e3a8a !important;
+      border-left-color: #3b82f6 !important;
+    }
+    
+    .dark .selected-chat .text-blue-600 {
+      color: #60a5fa;
+    }
+    
+    .dark #chatBox {
+      background-color: #111827;
+    }
+    
+    .dark .date-header {
+      background-color: rgba(31, 41, 55, 0.9);
+    }
+    
+    .dark #chatMenu {
+      background-color: #374151;
+    }
+    
+    .dark .menu-item:hover {
+      background-color: #4b5563;
+    }
+    
+    .dark .code-header {
+      background-color: #2d3748;
+      border-color: #4b5563;
+    }
+    
+    .dark .code-language {
+      color: #e5e7eb;
+    }
+    
+    .dark .code-block {
+      border-color: #4b5563;
+    }
+    
+    .dark pre {
+      background-color: #1a202c;
+    }
+    
+    .dark .markdown-content h1,
+    .dark .markdown-content h2,
+    .dark .markdown-content h3 {
+      color: #f3f4f6;
+    }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden">
@@ -533,13 +675,21 @@
           <div class="w-8 h-8 rounded-lg bg-navy-100 flex items-center justify-center">
             <i data-lucide="messages-square" class="text-navy-600 w-5 h-5"></i>
           </div>
-          <h1 class="font-semibold text-lg text-gray-700">Conversations</h1>
+          <h1 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Conversations</h1>
         </div>
         <div id="chatList" class="flex-1 overflow-y-auto p-3 space-y-1"></div>
-        <button id="newChatBtn" class="m-4 p-3 bg-navy-600 hover:bg-navy-700 text-white rounded-lg flex items-center justify-center space-x-2 smooth-transition">
-          <i data-lucide="plus" class="w-5 h-5"></i>
-          <span>New Chat</span>
-        </button>
+        <div class="border-t border-gray-200 dark:border-gray-700 p-4 flex flex-col space-y-3">
+          <button id="newChatBtn" class="p-3 bg-navy-600 hover:bg-navy-700 text-white rounded-lg flex items-center justify-center space-x-2 smooth-transition">
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            <span>New Chat</span>
+          </button>
+          <button id="themeToggleBtn" class="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg flex items-center justify-center space-x-2 smooth-transition">
+            <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
+            <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+            <span class="dark:hidden">Dark Mode</span>
+            <span class="hidden dark:block">Light Mode</span>
+          </button>
+        </div>
       </aside>
 
       <!-- Main Content -->

@@ -164,18 +164,16 @@ function renderChatList() {
       const timeString = lastMessageTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       const el = document.createElement("div");
-      el.className = `chat-item relative flex flex-col px-3 py-2 cursor-pointer rounded-lg hover:bg-navy-50 transition-colors ${id === currentChatId ? "selected-chat font-medium text-navy-700" : ""}`;
+      el.className = `chat-item flex items-center px-3 py-2 cursor-pointer rounded-lg transition-colors group ${id === currentChatId ? "selected-chat" : ""}`;
       el.innerHTML = `
-        <div class="flex items-center w-full justify-between group">
-          <div class="flex items-center min-w-0 flex-1">
-            <div class="w-3 h-3 rounded-full mr-2 flex-shrink-0 ${id === currentChatId ? "bg-navy-600" : "bg-gray-300"}"></div>
-            <span class="truncate">${escapeHTML(previewText)}</span>
-          </div>
-          <button class="menu-btn opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:text-navy-600 flex-shrink-0" data-chat-id="${id}" title="Menu">
-            <i data-lucide="more-vertical" class="w-4 h-4"></i>
-          </button>
+        <div class="w-2 h-2 ${id === currentChatId ? "bg-blue-500" : "bg-gray-400"} rounded-full mr-3 flex-shrink-0"></div>
+        <div class="flex-1 min-w-0">
+          <div class="truncate ${id === currentChatId ? "text-blue-600 font-medium" : "text-gray-700"}">${escapeHTML(previewText)}</div>
+          <div class="text-xs text-gray-400 mt-0.5">${timeString}</div>
         </div>
-        <div class="text-xs text-gray-400 mt-1 ml-5">${timeString}</div>
+        <button class="menu-btn opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:text-blue-600 ml-2 flex-shrink-0" data-chat-id="${id}" title="Menu">
+          <i data-lucide="more-vertical" class="w-4 h-4"></i>
+        </button>
       `;
       
       // Single click to load chat
@@ -198,6 +196,17 @@ function renderChatList() {
     `;
     chatList.appendChild(emptyState);
   }
+  
+  // Attach event listeners to menu buttons
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation(); // Prevent triggering the chat selection
+      showChatMenu(btn.getAttribute('data-chat-id'), e);
+    };
+  });
+  
+  // Initialize Lucide icons for the newly added elements
+  lucide.createIcons();
 }
 
 // Render chat messages
@@ -991,14 +1000,6 @@ function showChatMenu(chatId, event) {
   });
 }
 
-// After rendering the chat list, attach event listeners to menu buttons
-document.querySelectorAll('.menu-btn').forEach(btn => {
-  btn.onclick = (e) => {
-    e.stopPropagation(); // Prevent triggering the chat selection
-    showChatMenu(btn.getAttribute('data-chat-id'), e);
-  };
-});
-
 // Delete chat
 function deleteChat(chatId) {
   // Show confirmation dialog
@@ -1065,3 +1066,44 @@ function deleteChat(chatId) {
     }
   });
 }
+
+// Theme toggle functionality
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+// Check for saved theme preference or use system preference
+function getThemePreference() {
+  if (localStorage.getItem('theme') === 'dark' || 
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+    return 'dark';
+  } else {
+    document.documentElement.classList.remove('dark');
+    return 'light';
+  }
+}
+
+// Set initial theme
+getThemePreference();
+
+// Toggle theme
+themeToggleBtn.addEventListener('click', () => {
+  if (document.documentElement.classList.contains('dark')) {
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  } else {
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }
+  
+  // Re-initialize icons to ensure they update
+  lucide.createIcons();
+});
+
+// Update theme based on system changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  if (!localStorage.getItem('theme')) {
+    getThemePreference();
+    // Re-initialize icons to ensure they update
+    lucide.createIcons();
+  }
+});
