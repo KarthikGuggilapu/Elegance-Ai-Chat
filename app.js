@@ -130,7 +130,7 @@ function renderChat() {
 
     // Add avatar and message actions
     const avatar = document.createElement("div");
-    avatar.className = `flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isUser ? "ml-3 bg-navy-100" : "mr-3 bg-gray-100"}`;
+    avatar.className = `flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isUser ? "ml-3 mr-2 bg-navy-100" : "mr-3 bg-gray-100"}`;
     avatar.innerHTML = `<i data-lucide="${isUser ? "user" : "bot"}" class="w-4 h-4 ${isUser ? "text-navy-600" : "text-gray-600"}"></i>`;
     
     const messageRow = document.createElement("div");
