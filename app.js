@@ -663,12 +663,66 @@ questionInput.addEventListener('keydown', (e) => {
   }
 });
 
-// Init
-if (!currentChatId && Object.keys(chats).length > 0) {
-  currentChatId = Object.keys(chats)[0];
+// DOM elements
+const landingPage = document.getElementById('landingPage');
+const chatApp = document.getElementById('chatApp');
+const startChatBtn = document.getElementById('startChatBtn');
+
+// Start chat from landing page
+startChatBtn.addEventListener('click', () => {
+  landingPage.classList.add('hidden');
+  chatApp.classList.remove('hidden');
+  
+  // If no chats exist, create a new one
+  if (Object.keys(chats).length === 0) {
+    newChatBtn.click();
+  } else if (!currentChatId) {
+    // If there are chats but none selected, select the first one
+    currentChatId = Object.keys(chats)[0];
+    renderChat();
+  }
+  
+  // Focus the input
+  questionInput.focus();
+  
+  // Set a flag in localStorage to remember the user has started a chat
+  localStorage.setItem("hasUsedApp", "true");
+});
+
+// Initialize the app
+function initApp() {
+  // Load chats from localStorage
+  const savedChats = localStorage.getItem("chats");
+  if (savedChats) {
+    chats = JSON.parse(savedChats);
+  }
+  
+  // If there are saved chats, select the first one
+  if (Object.keys(chats).length > 0) {
+    // User has used the app before, so skip landing page
+    if (!currentChatId) {
+      currentChatId = Object.keys(chats)[0];
+    }
+    
+    // Show chat app directly instead of landing page
+    landingPage.classList.add('hidden');
+    chatApp.classList.remove('hidden');
+  }
+  
+  // Render the chat list
+  renderChatList();
+  
+  // If a chat is selected, render it
+  if (currentChatId) {
+    renderChat();
+  }
+  
+  // Initialize Lucide icons
+  lucide.createIcons();
 }
-renderChatList();
-renderChat();
+
+// Call initApp when the DOM is loaded
+document.addEventListener('DOMContentLoaded', initApp);
 
 // Focus input on load
 questionInput.focus();

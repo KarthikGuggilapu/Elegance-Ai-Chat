@@ -280,6 +280,7 @@
       position: sticky;
       top: 0;
       background-color: rgba(255, 255, 255, 0.9);
+      -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
       z-index: 1;
     }
@@ -398,72 +399,197 @@
     .group:hover .group-hover\:opacity-100 {
       opacity: 1;
     }
+    
+    /* Landing page animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    #landingPage h1 {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    #landingPage p {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    #landingPage .grid {
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    #landingPage button {
+      animation: fadeInUp 1.2s ease-out;
+    }
+    
+    /* Hover effects for feature cards */
+    #landingPage .bg-white {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    #landingPage .bg-white:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* Pulse animation for CTA button */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(77, 85, 235, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(77, 85, 235, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(77, 85, 235, 0);
+      }
+    }
+    
+    #startChatBtn {
+      animation: pulse 2s infinite;
+    }
+    
+    #startChatBtn:hover {
+      animation: none;
+    }
   </style>
 </head>
 <body class="text-gray-800 h-screen overflow-hidden">
-  <div class="flex h-full">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 sidebar-gradient shadow-lg flex flex-col border-r border-gray-200 lg:translate-x-0 transform -translate-x-full transition-transform duration-300 ease-in-out fixed lg:relative z-10 h-full">
-      <div class="p-5 pb-3 flex items-center space-x-2">
-        <div class="w-8 h-8 rounded-lg bg-navy-100 flex items-center justify-center">
-          <i data-lucide="messages-square" class="text-navy-600 w-5 h-5"></i>
-        </div>
-        <h1 class="font-semibold text-lg text-gray-700">Conversations</h1>
-      </div>
-      <div id="chatList" class="flex-1 overflow-y-auto p-3 space-y-1"></div>
-      <button id="newChatBtn" class="m-4 p-3 bg-navy-600 hover:bg-navy-700 text-white rounded-lg flex items-center justify-center space-x-2 smooth-transition">
-        <i data-lucide="plus" class="w-5 h-5"></i>
-        <span>New Chat</span>
-      </button>
-    </aside>
-
-    <!-- Chat Section -->
-    <main class="flex-1 flex flex-col overflow-hidden">
-      <!-- Header -->
-      <header class="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <!-- Mobile menu toggle -->
-          <button id="menuToggle" type="button" title="Toggle menu" class="lg:hidden w-10 h-10 rounded-full bg-navy-50 flex items-center justify-center">
-            <i data-lucide="menu" class="text-navy-600 w-5 h-5"></i>
-          </button>
-          
+  <!-- Landing Page (initially shown) -->
+  <div id="landingPage" class="h-full flex flex-col">
+    <!-- Landing Page Header -->
+    <header class="p-4 bg-white border-b border-gray-200">
+      <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-2">
           <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
-            <i data-lucide="bot" class="text-navy-600 w-5 h-5"></i>
+            <i data-lucide="bot" class="text-navy-600 w-6 h-6"></i>
           </div>
-          <div>
-            <h2 class="font-semibold text-gray-800">Elegance AI</h2>
-            <p class="text-xs text-gray-500">Always here to help</p>
+          <h1 class="font-bold text-xl text-gray-800">Elegance AI</h1>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Landing Page Content -->
+    <div class="flex-1 overflow-auto">
+      <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <div class="text-center mb-16">
+          <h1 class="text-5xl font-bold text-gray-900 mb-6">Experience AI Conversations with Elegance</h1>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">A beautiful, intuitive interface for meaningful interactions with advanced artificial intelligence</p>
+        </div>
+        
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-16 rounded-r-lg max-w-3xl mx-auto">
+          <p class="text-amber-800 font-medium">Knowledge Limitation</p>
+          <p class="text-amber-700">Elegance AI's knowledge is limited to information available up to 2021. For the most current information, please verify from other sources.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <div class="w-16 h-16 rounded-lg bg-navy-100 flex items-center justify-center mb-6 mx-auto">
+              <i data-lucide="brain" class="text-navy-600 w-8 h-8"></i>
+            </div>
+            <h3 class="font-semibold text-xl mb-3 text-center">Intelligent Responses</h3>
+            <p class="text-gray-600 text-center">Get thoughtful answers to your questions with advanced AI technology</p>
+          </div>
+          
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <div class="w-16 h-16 rounded-lg bg-navy-100 flex items-center justify-center mb-6 mx-auto">
+              <i data-lucide="sparkles" class="text-navy-600 w-8 h-8"></i>
+            </div>
+            <h3 class="font-semibold text-xl mb-3 text-center">Elegant Interface</h3>
+            <p class="text-gray-600 text-center">Enjoy a beautiful, intuitive design that makes conversations a pleasure</p>
+          </div>
+          
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+            <div class="w-16 h-16 rounded-lg bg-navy-100 flex items-center justify-center mb-6 mx-auto">
+              <i data-lucide="shield" class="text-navy-600 w-8 h-8"></i>
+            </div>
+            <h3 class="font-semibold text-xl mb-3 text-center">Private & Secure</h3>
+            <p class="text-gray-600 text-center">Your conversations are private and not used to train our models</p>
           </div>
         </div>
-      </header>
-
-      <!-- Chat Messages -->
-      <div id="chatBox" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-8"></div>
-
-      <!-- Input Area -->
-      <div class="p-4 border-t border-gray-200 bg-white">
-        <div class="relative">
-          <textarea 
-            id="question" 
-            rows="2" 
-            class="w-full border border-gray-300 rounded-xl p-4 pr-12 resize-none focus:border-navy-300 smooth-transition" 
-            placeholder="Ask Elegance AI anything..."
-          ></textarea>
-          <button 
-            id="askBtn" 
-            class="absolute right-3 bottom-3 w-10 h-10 rounded-lg bg-navy-600 hover:bg-navy-700 text-white flex items-center justify-center smooth-transition"
-            title="Send message"
-          >
-            <i data-lucide="send" class="w-5 h-5"></i>
+        
+        <div class="text-center">
+          <button id="startChatBtn" class="px-10 py-5 bg-navy-600 hover:bg-navy-700 text-white rounded-xl text-xl font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center mx-auto">
+            <i data-lucide="message-circle" class="w-6 h-6 mr-2"></i>
+            Start Conversation
           </button>
         </div>
-        <p class="text-xs text-gray-500 mt-2 text-center">AI may produce inaccurate information. Consider checking important information.</p>
       </div>
-    </main>
+    </div>
   </div>
 
-  <!-- Overlay for mobile sidebar -->
-  <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-0 hidden lg:hidden transition-opacity duration-300"></div>
+  <!-- Chat Application (initially hidden) -->
+  <div id="chatApp" class="h-full hidden">
+    <div class="flex h-full">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="w-64 sidebar-gradient shadow-lg flex flex-col border-r border-gray-200 lg:translate-x-0 transform -translate-x-full transition-transform duration-300 ease-in-out fixed lg:relative z-10 h-full">
+        <div class="p-5 pb-3 flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-lg bg-navy-100 flex items-center justify-center">
+            <i data-lucide="messages-square" class="text-navy-600 w-5 h-5"></i>
+          </div>
+          <h1 class="font-semibold text-lg text-gray-700">Conversations</h1>
+        </div>
+        <div id="chatList" class="flex-1 overflow-y-auto p-3 space-y-1"></div>
+        <button id="newChatBtn" class="m-4 p-3 bg-navy-600 hover:bg-navy-700 text-white rounded-lg flex items-center justify-center space-x-2 smooth-transition">
+          <i data-lucide="plus" class="w-5 h-5"></i>
+          <span>New Chat</span>
+        </button>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 flex flex-col overflow-hidden">
+        <!-- Header -->
+        <header class="p-4 border-b border-gray-200 bg-white flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <!-- Mobile menu toggle -->
+            <button id="menuToggle" type="button" title="Toggle menu" class="lg:hidden w-10 h-10 rounded-full bg-navy-50 flex items-center justify-center">
+              <i data-lucide="menu" class="text-navy-600 w-5 h-5"></i>
+            </button>
+            
+            <div class="w-10 h-10 rounded-full bg-navy-100 flex items-center justify-center">
+              <i data-lucide="bot" class="text-navy-600 w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="font-semibold text-gray-800">Elegance AI</h2>
+              <p class="text-xs text-gray-500">Always here to help</p>
+            </div>
+          </div>
+        </header>
+
+        <!-- Chat Messages -->
+        <div id="chatBox" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-8"></div>
+
+        <!-- Input Area -->
+        <div class="p-4 border-t border-gray-200 bg-white">
+          <div class="relative">
+            <textarea 
+              id="question" 
+              rows="2" 
+              class="w-full border border-gray-300 rounded-xl p-4 pr-12 resize-none focus:border-navy-300 smooth-transition" 
+              placeholder="Ask Elegance AI anything..."
+            ></textarea>
+            <button 
+              id="askBtn" 
+              class="absolute right-3 bottom-3 w-10 h-10 rounded-lg bg-navy-600 hover:bg-navy-700 text-white flex items-center justify-center smooth-transition"
+              title="Send message"
+            >
+              <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <p class="text-xs text-gray-500 mt-2 text-center">AI may produce inaccurate information. Consider checking important information.</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-0 hidden lg:hidden transition-opacity duration-300"></div>
+  </div>
 
   <script src="./app.js"></script>
   
