@@ -1,4 +1,4 @@
-const API_KEY = "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";
+const API_KEY = "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";
 const chatBox = document.getElementById("chatBox");
 const askBtn = document.getElementById("askBtn");
 const questionInput = document.getElementById("question");
